@@ -1,0 +1,3 @@
+<!-- inscription-traitement.php -->
+<?php 
+

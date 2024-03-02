@@ -1,0 +1,3 @@
+<!-- connexion-traitement.php -->
+
+<?php
