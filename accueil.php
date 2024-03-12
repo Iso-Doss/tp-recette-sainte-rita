@@ -1,4 +1,20 @@
 <!-- accueil.php -->
+
+<?php
+if (isset($_GET['message']) && !empty($_GET['message'])) {
+    $message = $_GET['message'];
+}
+
+if (!empty($message)) {
+?>
+    <div class="alert alert-success" role="alert">
+        <?= $message; ?>
+    </div>
+<?php
+}
+
+?>
+
 <h1>Site de recettes</h1>
 
 <p>Liste des recettes</p>

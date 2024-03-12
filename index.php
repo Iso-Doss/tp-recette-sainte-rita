@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once __DIR__ . '/app/fonction.php';
 ?>
 
@@ -51,6 +52,10 @@
 
                 case 'mot-de-passe-oublie-traitement':
                     include_once(__DIR__ . '/app/mot-de-passe-oublie/traitement.php');
+                    break;
+
+                case 'se-deconnecter':
+                    include_once(__DIR__ . '/app/se-deconnecter.php');
                     break;
 
                 default:

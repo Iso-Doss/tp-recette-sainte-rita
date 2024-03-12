@@ -13,10 +13,22 @@
                 <li class="nav-item">
                     <a class="nav-link <?= (isset($_GET['page']) && !empty($_GET['page']) && $_GET['page'] == 'contact') ? 'active' : '' ?>" href="index.php?page=contact">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link <?= (isset($_GET['page']) && !empty($_GET['page']) && ($_GET['page'] == 'inscription' || $_GET['page'] == 'connexion' || $_GET['page'] == 'mot-de-passe-oublie')) ? 'active' : '' ?>" href="index.php?page=inscription">S'inscrire / Se connecter</a>
-                </li>
+                <?php
+                if (est_connecter()) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?page=se-deconnecter">Se déconnecter</a>
+                    </li>
+                <?php
+                } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?= (isset($_GET['page']) && !empty($_GET['page']) && ($_GET['page'] == 'inscription' || $_GET['page'] == 'connexion' || $_GET['page'] == 'mot-de-passe-oublie')) ? 'active' : '' ?>" href="index.php?page=connexion">S'inscrire / Se connecter</a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
+        <?php
+        if (est_connecter()) {
+            echo "Bonjour " . $_SESSION['utilisateur_connecter']['nom'] . " " .  $_SESSION['utilisateur_connecter']['prenoms'];
+        } ?>
     </div>
 </nav>

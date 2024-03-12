@@ -37,10 +37,6 @@ if (empty($_POST)) {
         $erreurs['email'] = "Le champ adresse email contient une valeur qui est déja pris par un autre utilisateur.";
     }
 
-    if (!isset($_POST['mot-de-passe']) || empty($_POST['mot-de-passe'])) {
-        $erreurs['mot-de-passe'] = "Le champ mot de passe est vide ou inccorect.";
-    }
-
     $erreurs['mot-de-passe'] = '';
     $erreurs['confirmation-mot-de-passe'] = '';
 
