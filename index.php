@@ -1,3 +1,7 @@
+<?php
+    require_once __DIR__ . '/app/fonction.php';
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 

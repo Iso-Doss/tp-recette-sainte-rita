@@ -101,7 +101,10 @@ if (isset($_GET['erreurs']) && !empty($_GET['erreurs'])) {
                         (*)
                     </span>
                 </label>
-                <input type="email" name="email" class="form-control inscription-email" id="inscription-email" placeholder="Veuillez entrer votre adresse mail" required>
+                <input type="email" name="email" class="form-control inscription-email" id="inscription-email" placeholder="Veuillez entrer votre adresse mail" value="<?= (isset($donnees['email']) && !empty($donnees['email'])) ? $donnees['email'] : ''; ?>" required>
+                <p class="text-danger">
+                    <?= (isset($erreurs['email']) && !empty($erreurs['email'])) ? $erreurs['email'] : ''; ?>
+                </p>
             </div>
 
             <div class="mb-3">
@@ -111,7 +114,10 @@ if (isset($_GET['erreurs']) && !empty($_GET['erreurs'])) {
                         (*)
                     </span>
                 </label>
-                <input type="password" name="mot-de-passe" class="form-control inscription-mot-de-passe" id="inscription-mot-de-passe" placeholder="Veuillez entrer votre mot de passe" required>
+                <input type="password" name="mot-de-passe" class="form-control inscription-mot-de-passe" id="inscription-mot-de-passe" placeholder="Veuillez entrer votre mot de passe" value="<?= (isset($donnees['mot-de-passe']) && !empty($donnees['mot-de-passe'])) ? $donnees['mot-de-passe'] : ''; ?>" required>
+                <p class="text-danger">
+                    <?= (isset($erreurs['mot-de-passe']) && !empty($erreurs['mot-de-passe'])) ? $erreurs['mot-de-passe'] : ''; ?>
+                </p>
             </div>
 
             <div class="mb-3">
@@ -121,12 +127,18 @@ if (isset($_GET['erreurs']) && !empty($_GET['erreurs'])) {
                         (*)
                     </span>
                 </label>
-                <input type="password" name="confirmation-mot-de-passe" class="form-control inscription-confirmation-mot-de-passe" id="inscription-confirmation-mot-de-passe" placeholder="Veuillez entrer confirmer votre mot de passe" required>
+                <input type="password" name="confirmation-mot-de-passe" class="form-control inscription-confirmation-mot-de-passe" id="inscription-confirmation-mot-de-passe" placeholder="Veuillez entrer confirmer votre mot de passe" value="<?= (isset($donnees['confirmation-mot-de-passe']) && !empty($donnees['confirmation-mot-de-passe'])) ? $donnees['confirmation-mot-de-passe'] : ''; ?>" required>
+                <p class="text-danger">
+                    <?= (isset($erreurs['confirmation-mot-de-passe']) && !empty($erreurs['confirmation-mot-de-passe'])) ? $erreurs['confirmation-mot-de-passe'] : ''; ?>
+                </p>
             </div>
 
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="inscription-terms-conditions" required>
+                <input type="checkbox" class="form-check-input" id="inscription-terms-conditions" name="terms-conditions" required <?= (isset($donnees['terms-conditions']) && !empty($donnees['terms-conditions'])) ? 'checked' : ''; ?>>
                 <label class="form-check-label" for="inscription-terms-conditions">Oui j'accepte les terms et conditions du site de recettes</label>
+                <p class="text-danger">
+                    <?= (isset($erreurs['terms-conditions']) && !empty($erreurs['terms-conditions'])) ? $erreurs['terms-conditions'] : ''; ?>
+                </p>
             </div>
 
             <div class="mb-3">
