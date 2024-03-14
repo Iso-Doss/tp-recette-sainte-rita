@@ -16,6 +16,11 @@
                 <?php
                 if (est_connecter()) { ?>
                     <li class="nav-item">
+                    <a class="nav-link <?= (isset($_GET['page']) && !empty($_GET['page']) && ($_GET['page'] == 'mes-recettes' || $_GET['page'] == 'ajouter-recette')) ? 'active' : '' ?>"  href="index.php?page=mes-recettes">
+                            Mes recettes
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="index.php?page=se-deconnecter">Se déconnecter</a>
                     </li>
                 <?php

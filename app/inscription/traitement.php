@@ -1,5 +1,10 @@
 <!-- inscription-traitement.php -->
 <?php
+
+if(est_connecter()){
+    header("location:index.php?page=mes-recettes&message=Vous êtes déja connectez.");
+}
+
 // Le message de success global pour l'inscription.
 $message = "";
 // Le message d'erreur global pour l'inscription.

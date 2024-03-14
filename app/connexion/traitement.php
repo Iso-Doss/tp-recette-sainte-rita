@@ -1,6 +1,11 @@
 <!-- connexion-traitement.php -->
 
 <?php
+
+if(est_connecter()){
+    header("location:index.php?page=mes-recettes&message=Vous êtes déja connectez.");
+}
+
 // Le message de success global pour la connexion.
 $message = "";
 // Le message d'erreur global pour la connexion.

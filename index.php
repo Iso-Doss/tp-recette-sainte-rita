@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    require_once __DIR__ . '/app/fonction.php';
+session_start();
+require_once __DIR__ . '/app/fonction.php';
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +58,26 @@
                     include_once(__DIR__ . '/app/se-deconnecter.php');
                     break;
 
+                case 'mes-recettes':
+                    include_once(__DIR__ . '/app/mes-recettes/index.php');
+                    break;
+
+                case 'ajouter-recette':
+                    include_once(__DIR__ . '/app/mes-recettes/ajouter-recette.php');
+                    break;
+
+                case 'ajouter-recette-traitement':
+                    include_once(__DIR__ . '/app/mes-recettes/ajouter-recette-traitement.php');
+                    break;
+
+                case 'modifier-recette':
+                    include_once(__DIR__ . '/app/mes-recettes/modifier-recette.php');
+                    break;
+
+                case 'modifier-recette-traitement':
+                    include_once(__DIR__ . '/app/mes-recettes/modifier-recette-traitement.php');
+                    break;
+
                 default:
                     include_once(__DIR__ . '/404.php');
                     break;
@@ -69,5 +89,7 @@
     </div>
     <?php require_once(__DIR__ . '/app/commun/footer.php'); ?>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 </html>

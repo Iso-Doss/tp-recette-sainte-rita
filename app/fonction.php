@@ -118,7 +118,121 @@ function connexion_utilisateur($donnees_utilisateur): array
     return $utilisateur;
 }
 
+/**
+ * Cette fonction permet de verifier si un utilisateur est connecter ou pas.
+ * 
+ * @return bool
+ */
 function est_connecter(): bool
 {
     return isset($_SESSION['utilisateur_connecter']) && !empty($_SESSION['utilisateur_connecter']) && is_array($_SESSION['utilisateur_connecter']);
+}
+
+/**
+ * Cette fonction s'assure que le televersement du ficher est effectué avec succès.
+ * 
+ * @param string $nom_du_champ Le nom du champ.
+ * @return bool|string
+ */
+function verfier_image_televerser(string $nom_du_champ): bool | string
+{
+    // Testons si le fichier a bien été envoyé et s'il n'y a pas des erreurs
+    if (isset($_FILES[$nom_du_champ]) && $_FILES[$nom_du_champ]['error'] === 0) {
+
+        // Testons, si le fichier est trop volumineux
+        if ($_FILES[$nom_du_champ]['size'] > 1000000) {
+            return "L'envoi n'a pas pu être effectué, erreur ou image trop volumineuse.";
+        }
+
+        // Testons, si l'extension n'est pas autorisée
+        $fileInfo = pathinfo($_FILES[$nom_du_champ]['name']);
+        $extension = $fileInfo['extension'];
+        $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png'];
+        if (!in_array($extension, $allowedExtensions)) {
+            return  "L'envoi n'a pas pu être effectué, l'extension {$extension} n'est pas autorisée.";
+        }
+
+        // Testons, si le dossier uploads est manquant
+        $path =  __DIR__ . '/uploads/';
+        if (!is_dir($path)) {
+            mkdir(__DIR__ . '/uploads/');
+        }
+
+        // On peut valider le fichier et le stocker définitivement
+        return move_uploaded_file($_FILES[$nom_du_champ]['tmp_name'], $path . basename($_FILES[$nom_du_champ]['name']));
+    }
+    return "Le champ image est vide ou incorrect.";
+}
+
+/**
+ * Cette fonction permet d'ajouter une recette dans la base de données grace qu information de la recette envoyer par l'utilisateur.
+ * 
+ * @param array $donnees_recette Les données de la recette.
+ * @return bool
+ */
+function ajouter_recette(array $donnees_recette): bool
+{
+    $ajouter_recette = false;
+
+    $db = connexion_db();
+
+    if (is_object($db)) {
+        // Ecriture de la requête
+        $requetteSql = "INSERT INTO `recette`(`nom`, `description`, `recette`, `image`, `id_utilisateur`) VALUES (:nom, :description, :recette, :image, :id_utilisateur)";
+
+        // Préparation
+        $requette = $db->prepare($requetteSql);
+
+        // Exécution ! La recette est maintenant en base de données
+        try {
+            $ajouter_recette = $requette->execute($donnees_recette);
+        } catch (Exception $e) {
+            $ajouter_recette = false;
+        }
+    }
+
+    return $ajouter_recette;
+}
+
+/**
+ * Cette fonction permet de récuprer depuis la base de données la liste des recettes.
+ * 
+ * @return array $list_des_recettes La liste des recettes.
+ */
+function list_des_recettes(int $id_utilisateur = null): array
+{
+    $list_des_recettes = [];
+
+    $db = connexion_db();
+
+    if (is_object($db)) {
+        // Ecriture de la requête
+        $requetteSql = "SELECT * FROM recette";
+
+        if (!is_null($id_utilisateur)) {
+            $requetteSql = $requetteSql . " where id_utilisateur = :id_utilisateur";
+        }
+
+        // Préparation
+        $requette = $db->prepare($requetteSql);
+
+        // Exécution ! La recette est maintenant en base de données
+        try {
+            $donnees = [];
+
+            if (!is_null($id_utilisateur)) {
+                $donnees['id_utilisateur'] = $id_utilisateur;
+            }
+
+            $requette->execute($donnees);
+            $recettes = $requette->fetchAll(PDO::FETCH_ASSOC);
+            if (is_array($recettes)) {
+                $list_des_recettes = $recettes;
+            }
+        } catch (Exception $e) {
+            $list_des_recettes = [];
+        }
+    }
+
+    return $list_des_recettes;
 }
