@@ -236,3 +236,99 @@ function list_des_recettes(int $id_utilisateur = null): array
 
     return $list_des_recettes;
 }
+
+/**
+ * Cette foncton permet de recupérer une recette grace a son id.
+ * 
+ * @param int $id_recette L'id de la recette.
+ * @return array $recette La recette.
+ */
+function recuperer_recette_par_son_id(int $id_recette): array
+{
+    $recette = [];
+
+    $db = connexion_db();
+
+    if (is_object($db)) {
+        // Ecriture de la requête
+        $requetteSql = "SELECT * FROM recette where id = :id";
+
+        // Préparation
+        $requette = $db->prepare($requetteSql);
+
+        // Exécution ! La recette est maintenant en base de données
+        try {
+
+            $requette->execute([
+                'id' => $id_recette
+            ]);
+            $recette = $requette->fetch(PDO::FETCH_ASSOC);
+            if (is_array($recette)) {
+                $recette = $recette;
+            } else {
+                $recette = [];
+            }
+        } catch (Exception $e) {
+            $recette = [];
+        }
+    }
+
+
+    return $recette;
+}
+
+/**
+ * Cette fonction permet de modifier une recette existante dans la base de données.
+ * 
+ * @param array $donnees_recette Les donnees de la recette.
+ * @return bool Es ce que la recette a pu etre modifier ou pas.
+ */
+function modfier_recette($donnees_recette): bool
+{
+    $modfier_recette = false;
+
+    $db = connexion_db();
+
+    if (is_object($db)) {
+        // Ecriture de la requête
+        $requetteSql = "UPDATE `recette` SET `nom`= :nom,`description`=:description,`recette`=:recette,`image`=:image WHERE `id` = :id";
+
+        // Préparation
+        $requette = $db->prepare($requetteSql);
+
+        // Exécution ! La recette est maintenant en base de données
+        try {
+            $modfier_recette = $requette->execute($donnees_recette);
+        } catch (Exception $e) {
+            $modfier_recette = false;
+        }
+    }
+
+    return $modfier_recette;
+}
+
+function supprimer_recette(int $id_recette): bool
+{
+    $supprimer_recette = false;
+
+    $db = connexion_db();
+
+    if (is_object($db)) {
+        // Ecriture de la requête
+        $requetteSql = "DELETE FROM `recette` WHERE `id` = :id";
+
+        // Préparation
+        $requette = $db->prepare($requetteSql);
+
+        // Exécution ! La recette est maintenant en base de données
+        try {
+            $supprimer_recette = $requette->execute([
+                'id' => $id_recette
+            ]);
+        } catch (Exception $e) {
+            $supprimer_recette = false;
+        }
+    }
+
+    return $supprimer_recette;
+}

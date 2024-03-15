@@ -11,6 +11,10 @@ if (isset($_GET['message']) && !empty($_GET['message'])) {
     $message = $_GET['message'];
 }
 
+if (isset($_GET['erreur']) && !empty($_GET['erreur'])) {
+    $erreur = $_GET['erreur'];
+}
+
 if (!empty($message)) {
 ?>
     <div class="alert alert-success" role="alert">
@@ -19,6 +23,13 @@ if (!empty($message)) {
 <?php
 }
 
+if (!empty($erreur)) {
+?>
+    <div class="alert alert-danger" role="alert">
+        <?= $erreur; ?>
+    </div>
+<?php
+}
 ?>
 
 <div class="row d-flex justify-content-between align-items-center">
@@ -66,16 +77,16 @@ if (empty($recettes)) {
                         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#details-recette-<?= $recette['id']; ?>">
                             Détails
                         </button>
-                        <a href="" class="btn btn-warning">
+                        <a href="index.php?page=modifier-recette&id=<?= $recette['id']; ?>" class="btn btn-warning">
                             Modifier
                         </a>
-                        <a href="" class="btn btn-danger">
+                        <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#supprimer-recette-<?= $recette['id']; ?>">
                             Supprimer
                         </a>
                     </td>
                 </tr>
 
-                <!-- Modal -->
+                <!-- Modal details recette -->
                 <div class="modal fade" id="details-recette-<?= $recette['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -110,6 +121,31 @@ if (empty($recettes)) {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal supprimer recette -->
+                <div class="modal fade" id="supprimer-recette-<?= $recette['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                    Suppression de la recette <?= $recette['nom']; ?>
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Etes vous sur de vouloir supprimer cette recette ?
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="index.php?page=supprimer-recette-traitement&id=<?= $recette['id']; ?>" method="post">
+                                    <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Oui</button>
+                                </form>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
                             </div>
                         </div>
                     </div>

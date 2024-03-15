@@ -63,19 +63,23 @@ require_once __DIR__ . '/app/fonction.php';
                     break;
 
                 case 'ajouter-recette':
-                    include_once(__DIR__ . '/app/mes-recettes/ajouter-recette.php');
+                    include_once(__DIR__ . '/app/mes-recettes/ajouter/index.php');
                     break;
 
                 case 'ajouter-recette-traitement':
-                    include_once(__DIR__ . '/app/mes-recettes/ajouter-recette-traitement.php');
+                    include_once(__DIR__ . '/app/mes-recettes/ajouter/traitement.php');
                     break;
 
                 case 'modifier-recette':
-                    include_once(__DIR__ . '/app/mes-recettes/modifier-recette.php');
+                    include_once(__DIR__ . '/app/mes-recettes/modifier/index.php');
                     break;
 
                 case 'modifier-recette-traitement':
-                    include_once(__DIR__ . '/app/mes-recettes/modifier-recette-traitement.php');
+                    include_once(__DIR__ . '/app/mes-recettes/modifier/traitement.php');
+                    break;
+
+                case 'supprimer-recette-traitement':
+                    include_once(__DIR__ . '/app/mes-recettes/supprimer/traitement.php');
                     break;
 
                 default:
